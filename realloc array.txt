@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+	char *matrix = NULL;
+	int elem, i = 0;
+	while (scanf_s("%d", &elem) == 1 && elem != -1) {
+		matrix = realloc(matrix, (i + 1) * sizeof(int));
+		matrix[i] = elem;
+		i++;
+	}
+	int count = i - 1;
+
+	// reverse output
+
+	printf("%d", matrix[count]);
+	for (int j = count - 1; j >= 0; j--) {
+		printf(" %d", matrix[j]);
+	}
+
+	printf("\n");
+
+	// swap first min first max
+
+	int max = matrix[0];
+	int min = matrix[0];
+	int cmin, cmax;
+
+	for (int k = 0; k <= count; k++) {
+		if (matrix[k] < min) {
+			min = matrix[k];
+		}
+	}
+
+	int k = 0;
+	while (k <= count) {
+		if (matrix[k] == min) {
+			cmin = k;
+			break;
+		}
+		k++;
+	}
+
+	for (int k = 0; k <= count; k++) {
+		if (matrix[k] > max) {
+			max = matrix[k];
+		}
+	}
+
+	k = 0;
+	while (k <= count) {
+		if (matrix[k] == max) {
+			cmax = k;
+			break;
+		}
+		k++;
+	}
+
+	matrix[cmax] = min;
+	matrix[cmin] = max;
+
+	printf("%d", matrix[0]);
+	for (int j = 1; j <= count; j++) {
+		printf(" %d", matrix[j]);
+	}
+
+	printf("\n");
+
+	// sort
+
+	int temp;
+	for (int i = 0; i <= count - 1; i++) {
+		for (int j = 0; j <= count - i - 1; j++) {
+			if (matrix[j + 1] < matrix[j]) {
+				temp = matrix[j];
+				matrix[j] = matrix[j + 1];
+				matrix[j + 1] = temp;
+			}
+		}
+	}
+
+	printf("%d", matrix[0]);
+	for (int j = 1; j <= count; j++) {
+		printf(" %d", matrix[j]);
+	}
+
+	free(matrix);
+	return 0;
+}
